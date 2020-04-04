@@ -1,0 +1,46 @@
+{
+  "name": "Progressive Web Appsd",
+  "short_name": "PWA",
+  "icons": [
+    {
+      "src": "images/mstile-70x70.png",
+      "sizes": "70x70",
+      "type": "image/png"
+    },
+    {
+      "src": "images/mstile-144x144.png",
+      "sizes": "144x144",
+      "type": "image/png"
+    },
+    {
+      "src": "images/mstile-150x150.png",
+      "sizes": "150x150",
+      "type": "image/png"
+    },
+    {
+      "src": "images/mstile-192x192.png",
+      "sizes": "310x150",
+      "type": "image/png"
+    },
+    {
+      "src": "images/mstile-310x150.png",
+      "sizes": "310x150",
+      "type": "image/png"
+    },
+    {
+      "src": "images/mstile-310x310.png",
+      "sizes": "310x310",
+      "type": "image/png"
+    },
+    {
+      "src": "images/mstile-512x512.png",
+      "sizes": "310x310",
+      "type": "image/png"
+    }
+  ],
+  "lang": "en-US",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "black",
+  "theme_color": "black"
+}
