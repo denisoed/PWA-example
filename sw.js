@@ -1,19 +1,36 @@
-var cacheName = 'pwa_v1';
-var filesToCache = [
-  '/',
-  '/index.html',
-  '/css/styles.css',
-  '/js/main.js'
+const cacheName = 'pwa_v1';
+const includeToCache = [
+  '/images/favicon.ico'
 ];
 
 /* Start the service worker and cache all of the app's content */
-self.addEventListener('install', function (e) {
+self.addEventListener('install', e => {
   self.skipWaiting();
   e.waitUntil(
-    caches.open(cacheName).then(function (cache) {
-      return cache.addAll(filesToCache);
+    caches.open(cacheName).then(cache => {
+      return cache.addAll(includeToCache);
     })
   );
+});
+
+/* Serve cached content when offline */
+self.addEventListener('fetch', e => {
+  e.respondWith(
+    caches.match(e.request).then(response => {
+      return response || fetch(e.request);
+    })
+  );
+});
+
+self.addEventListener('message', (event) => {
+  if (event.data.type === 'CACHE_URLS') {
+    event.waitUntil(
+      caches.open(cacheName)
+      .then((cache) => {
+        return cache.addAll(event.data.payload);
+      })
+    );
+  }
 });
 
 self.addEventListener('activate', event => {
@@ -28,15 +45,6 @@ self.addEventListener('activate', event => {
       })
     )).then(() => {
       console.log(cacheName + ' now ready to handle fetches!');
-    })
-  );
-});
-
-/* Serve cached content when offline */
-self.addEventListener('fetch', function (e) {
-  e.respondWith(
-    caches.match(e.request).then(function (response) {
-      return response || fetch(e.request);
     })
   );
 });

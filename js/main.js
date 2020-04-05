@@ -1,11 +1,16 @@
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', function () {
-    navigator.serviceWorker.register('/sw.js').then(function (registration) {
-      // registration.active;
-      registration.update();
-      console.log('Service worker successfully registered on scope', registration.scope);
-    }).catch(function (error) {
-      console.log('Service worker failed to register');
-    });
-  });
-}
+window.addEventListener('load', () => {
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/sw.js', { scope: '/' })
+      .then(reg => {
+        const data = {
+          type: 'CACHE_URLS',
+          payload: [
+            location.href,
+            ...performance.getEntriesByType('resource').map(r => r.name)
+          ]
+        };
+        reg.installing.postMessage(data);
+        reg.update();
+      }).catch(err => console.log('SW registration FAIL:', err));
+  }
+});
